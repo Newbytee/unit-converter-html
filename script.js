@@ -7,26 +7,34 @@ const UNIT_CONVERSION_RATES = {
     degrees: 180,
     gradian: 200
 };
-const UNIT_CONVERSION_TYPES = {
-    angles: [ "Radians", "Degrees", "Gradians", "Turns" ],
-    length: [ "Metres", "Feet" ],
-    temperature: [ "Celcius", "Kelvin", "Farenheit" ],
-    weight: [ "Kilograms", "Pounds" ],
-    pressure: []
-};
+const UNIT_CONVERSION_TYPES = [
+    [ "Radians", "Degrees", "Gradians", "Turns" ],
+    [ "Metres", "Feet" ],
+    [ "Celcius", "Kelvin", "Farenheit" ],
+    [ "Kilograms", "Pounds" ],
+];
 
-TYPE_SELECTOR.addEventListener("change", whenChanged());
+TYPE_SELECTOR.addEventListener("change", whenChanged);
 
 function whenChanged() {
-    switch(TYPE_SELECTOR.selectedIndex) {
-        case 0:
-            for (let i = 0; i < UNIT_CONVERSION_TYPES.angles.length; i++) {
-                for (let j = 0; j < UNIT_SELECTORS.length; i++) {
-                    let newOption = document.createElement("OPTION");
-                    newOption.innerHTML = UNIT_CONVERSION_TYPES.angles[i];
-                    UNIT_SELECTORS[j].appendChild(newOption);
-                }
-            }
-            break;
+    for (let i = 0; i < UNIT_SELECTORS.length; i++) {
+        while (UNIT_SELECTORS[i].hasChildNodes()) {
+            UNIT_SELECTORS[i].removeChild(UNIT_SELECTORS[i].lastChild);
+        }
+    }
+    populateSelectors(UNIT_CONVERSION_TYPES[TYPE_SELECTOR.selectedIndex]);
+    UNIT_SELECTORS[1].selectedIndex = UNIT_SELECTORS[1].selectedIndex + 1;
+}
+
+function populateSelectors(conversionType) {
+    if (!conversionType) return;
+    for (let i = 0; i < conversionType.length; i++) {
+        for (let j = 0; j < UNIT_SELECTORS.length; j++) {
+            let newOption = document.createElement("OPTION");
+            newOption.innerHTML = conversionType[i];
+            UNIT_SELECTORS[j].appendChild(newOption);
+        }
     }
 }
+
+whenChanged();

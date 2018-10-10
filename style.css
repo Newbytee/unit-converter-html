@@ -1,4 +1,13 @@
+body {
+    font-family: sans-serif;
+}
+
+.unitSelection {
+    float: right;
+}
+
 #wrapper {
     margin-left: auto;
-    width: 80%;
+    margin-right: auto;
+    width: 70%;
 }
